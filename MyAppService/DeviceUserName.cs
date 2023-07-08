@@ -59,13 +59,47 @@ namespace MyAppService
       returnData.Add("Result", sb.ToString());
       returnData.Add("Status", "OK");
 
-      // Return the data to the caller.
       await args.Request.SendResponseAsync(returnData);
 
-      // Complete the deferral so that the platform knows that we're done responding to the app service call.
-      // Note for error handling: this must be called even if SendResponseAsync() throws an exception.
       messageDeferral.Complete();
     }
+
+    // Correção
+
+    //private async void OnRequestReceived(AppServiceConnection sender, AppServiceRequestReceivedEventArgs args)
+    //{
+    //  var messageDeferral = args.GetDeferral();
+
+    //  ValueSet message = args.Request.Message;
+    //  ValueSet returnData = new ValueSet();
+
+    //  StringBuilder sb = new StringBuilder(100);
+    //  UInt32 size = 100;
+
+    //  try
+    //  {
+
+    //    GetUserNameW(sb, ref size);
+
+    //    returnData.Add("Result", sb.ToString());
+    //    returnData.Add("Status", "OK");
+    //  }
+    //  catch (Exception ex)
+    //  {
+    //    returnData.Add("Error", ex.Message);
+    //    returnData.Add("Status", "Error");
+    //  }
+    //  finally
+    //  {
+    //    // Liberar explicitamente o StringBuilder
+    //    sb.Clear();
+    //    sb = null;
+
+    //    messageDeferral.Complete();
+    //  }
+
+    //  await args.Request.SendResponseAsync(returnData);
+    //}
 
 
     private void OnTaskCanceled(IBackgroundTaskInstance sender, BackgroundTaskCancellationReason reason)
