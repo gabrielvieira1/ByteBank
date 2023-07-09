@@ -57,11 +57,12 @@ namespace ByteBank
       }
 
       // Call the service.
-      //int idx = int.Parse(textBox.Text);
-      string folderPath = textBox.Text;
+      int idx = int.Parse(textBox.Text);
+      //string folderPath = textBox.Text;
       var message = new ValueSet();
       message.Add("Command", "Item");
-      message.Add("FolderPath", folderPath);
+      message.Add("ID", idx);
+      //message.Add("FolderPath", folderPath);
       AppServiceResponse response = await this.deviceService.SendMessageAsync(message);
       string result = "";
 
@@ -72,7 +73,7 @@ namespace ByteBank
         {
           result = response.Message["Result"] as string;
         }
-        await Launcher.LaunchUriAsync(new Uri("calculator://"));
+        //await Launcher.LaunchUriAsync(new Uri("calculator://"));
       }
 
       textBox.Text = result;
