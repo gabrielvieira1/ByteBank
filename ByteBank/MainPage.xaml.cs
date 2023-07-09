@@ -57,10 +57,11 @@ namespace ByteBank
       }
 
       // Call the service.
-      int idx = int.Parse(textBox.Text);
+      //int idx = int.Parse(textBox.Text);
+      string folderPath = textBox.Text;
       var message = new ValueSet();
       message.Add("Command", "Item");
-      message.Add("ID", idx);
+      message.Add("FolderPath", folderPath);
       AppServiceResponse response = await this.deviceService.SendMessageAsync(message);
       string result = "";
 

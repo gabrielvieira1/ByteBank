@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -28,6 +30,11 @@ namespace MyAppService
       [param: MarshalAs(UnmanagedType.LPWStr)] StringBuilder lpBuffer,
       ref UInt32 pcbBuffer);
 
+
+    [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
+    private static extern bool RemoveDirectory(string lpPathName);
+
+
     public void Run(IBackgroundTaskInstance taskInstance)
     {
       // Get a deferral so that the service isn't terminated.
@@ -51,17 +58,54 @@ namespace MyAppService
 
       //int result = MessageBoxW(IntPtr.Zero, "Hello World", "This is window title", 0);
 
-      StringBuilder sb = new StringBuilder(100);
-      UInt32 size = 100;
+      //StringBuilder sb = new StringBuilder(100);
+      //UInt32 size = 100;
 
-      GetUserNameW(sb, ref size);
+      //GetUserNameW(sb, ref size);
 
-      returnData.Add("Result", sb.ToString());
-      returnData.Add("Status", "OK");
+      //returnData.Add("Result", sb.ToString());
+      //returnData.Add("Status", "OK");
+
+
+      //string folderPath = message["FolderPath"] as string;
+      string folderPath = "C:\\Users\\gabri\\OneDrive\\Documentos\\TesteFolderAppService";
+
+
+      if (!string.IsNullOrEmpty(folderPath))
+      {
+        if (DeleteFolder(folderPath))
+        {
+          returnData.Add("Status", "OK");
+          returnData.Add("Result", "Folder deleted successfully.");
+        }
+        else
+        {
+          returnData.Add("Status", "Fail");
+          returnData.Add("Result", "Failed to delete the folder.");
+        }
+      }
+      else
+      {
+        returnData.Add("Status", "Fail");
+        returnData.Add("Result", "Folder path not provided.");
+      }
 
       await args.Request.SendResponseAsync(returnData);
 
       messageDeferral.Complete();
+    }
+
+    private bool DeleteFolder(string folderPath)
+    {
+      try
+      {
+        RemoveDirectory(folderPath);
+        return true;
+      }
+      catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException || ex is ArgumentException || ex is NotSupportedException || ex is Win32Exception)
+      {
+        return false;
+      }
     }
 
     // Correção
