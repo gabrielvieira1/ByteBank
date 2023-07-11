@@ -25,6 +25,7 @@ namespace ByteBank
   public sealed partial class MainPage : Page
   {
     private AppServiceConnection deviceService;
+    Library lib = new Library();
 
     public MainPage()
     {
@@ -77,6 +78,15 @@ namespace ByteBank
       }
 
       textBox.Text = result;
+    }
+    private void GenerateLogs_Click(object sender, RoutedEventArgs e)
+    {
+      lib.GenerateLogs();
+    }
+
+    private void DeleteLogs_Click(object sender, RoutedEventArgs e)
+    {
+      lib.DeleteLogs();
     }
   }
 }

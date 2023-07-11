@@ -13,4 +13,14 @@
     <TextBlock x:Name="textBlock" Width="300" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 -100 0 0"/>
     <Button x:Name="btnClick" Content="Click" Click="btnClick_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 100 0 0"/>
   </Grid>
+  <Page.BottomAppBar>
+    <AppBar IsOpen="True" IsSticky="True">
+      <StackPanel Orientation="Horizontal">
+        <AppBarButton Icon="Save" Name="GenerateLogs"
+                              Label="Generate logs" Click="GenerateLogs_Click"/>
+        <AppBarButton Icon="Delete" Name="DeleteLogs"
+                              Label="Delete logs" Click="DeleteLogs_Click"/>
+      </StackPanel>
+    </AppBar>
+  </Page.BottomAppBar>
 </Page>
