@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -17,14 +18,18 @@ using Windows.UI.Xaml.Navigation;
 
 namespace AppServiceProvider
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class MainPage : Page
+  /// <summary>
+  /// An empty page that can be used on its own or navigated to within a Frame.
+  /// </summary>
+  public sealed partial class MainPage : Page
+  {
+    public MainPage()
     {
-        public MainPage()
-        {
-            this.InitializeComponent();
-        }
+      this.InitializeComponent();
+
+      //string folderPath = "C:\\Users\\gv.santos\\Documents\\TesteFolderAppService";
+
+      //(StorageFolder.GetFolderFromPathAsync(folderPath).AsTask().Result).DeleteAsync().AsTask().Wait();
     }
+  }
 }

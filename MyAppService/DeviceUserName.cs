@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.AppService;
 using Windows.ApplicationModel.Background;
 using Windows.Foundation.Collections;
+using Windows.ApplicationModel;
 
 namespace MyAppService
 {
@@ -31,8 +32,8 @@ namespace MyAppService
       ref UInt32 pcbBuffer);
 
 
-    [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
-    private static extern bool RemoveDirectory(string lpPathName);
+    [DllImport("Kernel32.dll", CharSet = CharSet.Unicode)]
+    private static extern bool RemoveDirectoryW(string lpPathName);
 
 
     public void Run(IBackgroundTaskInstance taskInstance)
@@ -51,6 +52,8 @@ namespace MyAppService
 
     private async void OnRequestReceived(AppServiceConnection sender, AppServiceRequestReceivedEventArgs args)
     {
+      await FullTrustProcessLauncher.LaunchFullTrustProcessForCurrentAppAsync("OpenWin32");
+
       var messageDeferral = args.GetDeferral();
 
       ValueSet message = args.Request.Message;
@@ -58,16 +61,8 @@ namespace MyAppService
 
       //int result = MessageBoxW(IntPtr.Zero, "Hello World", "This is window title", 0);
 
-      StringBuilder sb = new StringBuilder(100);
-      UInt32 size = 100;
-
-      GetUserNameW(sb, ref size);
-
-      returnData.Add("Result", sb.ToString());
       returnData.Add("Status", "OK");
-
-
-      //int result = MessageBoxW(IntPtr.Zero, "Hello World", "This is window title", 0);
+      returnData.Add("Result", "Folder deleted successfully.");
 
       //StringBuilder sb = new StringBuilder(100);
       //UInt32 size = 100;
@@ -80,27 +75,31 @@ namespace MyAppService
       // Delete FOLDER
 
       //string folderPath = message["FolderPath"] as string;
-      //  string folderPath = "C:\\Users\\gabri\\OneDrive\\Documentos\\TesteFolderAppService";
+      ////string folderPath = "C:\\Users\\gv.santos\\Documents\\TesteFolderAppService";
 
 
-      //  if (!string.IsNullOrEmpty(folderPath))
+      //if (!string.IsNullOrEmpty(folderPath))
+      //{
+      //  if (DeleteFolder(folderPath))
       //  {
-      //    if (DeleteFolder(folderPath))
-      //    {
-      //      returnData.Add("Status", "OK");
-      //      returnData.Add("Result", "Folder deleted successfully.");
-      //    }
-      //    else
-      //    {
-      //      returnData.Add("Status", "Fail");
-      //      returnData.Add("Result", "Failed to delete the folder.");
-      //    }
+      //    returnData.Add("Status", "OK");
+      //    returnData.Add("Result", "Folder deleted successfully.");
       //  }
       //  else
       //  {
       //    returnData.Add("Status", "Fail");
-      //    returnData.Add("Result", "Folder path not provided.");
+      //    returnData.Add("Result", "Failed to delete the folder.");
       //  }
+      //}
+      //else
+      //{
+      //  returnData.Add("Status", "Fail");
+      //  returnData.Add("Result", "Folder path not provided.");
+      //}
+
+      //string folderPath = "C:\\Users\\gv.santos\\Documents\\TesteFolderAppService";
+
+      //Directory.Delete(folderPath);
 
       await args.Request.SendResponseAsync(returnData);
 
@@ -111,8 +110,8 @@ namespace MyAppService
     //{
     //  try
     //  {
-    //    RemoveDirectory(folderPath);
-    //    return true;
+    //    bool res = RemoveDirectoryW(folderPath);
+    //    return res;
     //  }
     //  catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException || ex is ArgumentException || ex is NotSupportedException || ex is Win32Exception)
     //  {

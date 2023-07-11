@@ -6,7 +6,8 @@
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10"
   xmlns:uap4="http://schemas.microsoft.com/appx/manifest/uap/windows10/4"
-  IgnorableNamespaces="uap mp iot uap4">
+		xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap mp iot uap4 rescap">
 
   <Identity
     Name="c6ee4a46-c5c7-42ae-bec1-6449e0db18a7"
@@ -51,5 +52,6 @@
     <iot:Capability Name="systemManagement"/>
     <uap:Capability Name="userAccountInformation"/>
     <uap4:Capability Name="userDataTasks"/>
-  </Capabilities>
+				<rescap:Capability Name="broadFileSystemAccess" />
+		</Capabilities>
 </Package>

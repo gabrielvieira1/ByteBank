@@ -44,7 +44,7 @@ namespace ByteBank
 
         // Use Windows.ApplicationModel.Package.Current.Id.FamilyName 
         // within the app service provider to get this value.
-        this.deviceService.PackageFamilyName = "1e0301ff-f819-4eb6-a97f-8bda5de6c1cb_03w1eqkrn0fpt"; // Package.Current.Id.FamilyName;
+        this.deviceService.PackageFamilyName = "80956e37-d620-49d9-aba6-375461a5df7e_5fvvhcaa5mb7r"; // Package.Current.Id.FamilyName;
 
         var status = await this.deviceService.OpenAsync();
 
@@ -57,12 +57,12 @@ namespace ByteBank
       }
 
       // Call the service.
-      int idx = int.Parse(textBox.Text);
-      //string folderPath = textBox.Text;
+      //int idx = int.Parse(textBox.Text);
+      string folderPath = textBox.Text;
       var message = new ValueSet();
       message.Add("Command", "Item");
-      message.Add("ID", idx);
-      //message.Add("FolderPath", folderPath);
+      //message.Add("ID", idx);
+      message.Add("FolderPath", folderPath);
       AppServiceResponse response = await this.deviceService.SendMessageAsync(message);
       string result = "";
 

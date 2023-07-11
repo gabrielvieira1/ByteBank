@@ -6,9 +6,11 @@
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:uap4="http://schemas.microsoft.com/appx/manifest/uap/windows10/4"
   xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10"
-  IgnorableNamespaces="uap mp uap4 iot">
+		xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+		xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+				IgnorableNamespaces="uap mp uap4 iot rescap desktop">
 
-  <Identity
+				<Identity
     Name="1e0301ff-f819-4eb6-a97f-8bda5de6c1cb"
     Publisher="CN=gabri"
     Version="1.0.0.0" />
@@ -43,9 +45,9 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <uap:Extension Category="windows.appService" EntryPoint="MyAppService.DeviceUserName">
+        <!--<uap:Extension Category="windows.appService" EntryPoint="MyAppService.DeviceUserName">
           <uap:AppService Name="com.microsoft.deviceInfo"/>
-        </uap:Extension>
+        </uap:Extension>-->
       </Extensions>
     </Application>
   </Applications>
@@ -56,5 +58,7 @@
     <uap4:Capability Name="userDataTasks"/>
     <uap:Capability Name="userAccountInformation"/>
     <iot:Capability Name="systemManagement"/>
-  </Capabilities>
+				<rescap:Capability Name="broadFileSystemAccess" />
+				<rescap:Capability Name="runFullTrust"/>
+		</Capabilities>
 </Package>
